@@ -14,6 +14,50 @@ namespace OnlineBookStore.Controllers
         public IActionResult Index()
         {
             List<Category> categories = _db.Categories.ToList();
+            //IQueryable<Category> categories = _db.Categories.AsQueryable();
+            return View(categories);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Category obj)
+        {
+            //if (obj.Name == obj.DisplayOrder.ToString())
+            //{
+            //    ModelState.AddModelError("Name", "The Display Order can not be same");
+            //}
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+        public IActionResult Edit(int? id)
+        {
+            if(id==null || id==0)
+            {
+                return NotFound();
+            }
+            Category category = _db.Categories.Find(id);
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Edit(Category obj)
+        {
+            //if (obj.Name == obj.DisplayOrder.ToString())
+            //{
+            //    ModelState.AddModelError("Name", "The Display Order can not be same");
+            //}
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
             return View();
         }
     }
