@@ -32,6 +32,7 @@ namespace OnlineBookStore.Controllers
             {
                 _db.Categories.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -43,7 +44,7 @@ namespace OnlineBookStore.Controllers
                 return NotFound();
             }
             Category category = _db.Categories.Find(id);
-            return View();
+            return View(category);
         }
         [HttpPost]
         public IActionResult Edit(Category obj)
@@ -54,11 +55,25 @@ namespace OnlineBookStore.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
+                _db.Categories.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            Category? obj = _db.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(obj);
+            _db.SaveChanges();
+            TempData["success"] = "Category deleted successfully";
+            return RedirectToAction("Index");
         }
     }
 }
