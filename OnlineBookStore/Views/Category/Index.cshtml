@@ -38,11 +38,9 @@
                             <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId" class="btn btn-warning mx-2">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
-                            <form method="post" asp-controller="Category" asp-action="Delete" asp-route-id="@item.CategoryId">
-                                <a class="btn btn-danger mx-2" href="javascript:void(0);" onclick="document.forms[0].submit();">
-                                    <i class="bi bi-trash-fill"></i> Delete
-                                </a>
-                            </form>
+                            <a asp-controller="Category" asp-action="Delete" asp-route-id="@item.CategoryId" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </a>
                         </div>
                     </td>
                 </tr>

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace OnlineBookStore.Migrations
+namespace BookStore.DataAccess.Migrations
 {
     /// <inheritdoc />
     public partial class catagorytable : Migration

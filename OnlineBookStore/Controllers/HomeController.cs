@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using OnlineBookStore.Models;
+using BookStore.Models;
 using System.Diagnostics;
 
 namespace OnlineBookStore.Controllers
