@@ -1,5 +1,4 @@
-﻿using BookStore.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace BookStore.DataAccess.Interfaces
 {
-    public interface ICategory : IRepo<Category>
+    public interface IUnitOfWork
     {
-        void Update(Category category);
+        ICategory Category { get; }
+        IProduct Product { get; }
+        void Save();
     }
 }

@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace BookStore.DataAccess.Repos
 {
-    public class CategoryRepo : Repository<Category>, ICategory
+    public class ProductRepo : Repository<Product>, IProduct
     {
         private readonly ApplicationDbContext _db;
-        public CategoryRepo(ApplicationDbContext db) : base(db) 
+        public ProductRepo(ApplicationDbContext db) : base(db)
         {
             _db = db;
         }
 
-        public void Update(Category obj)
+        public void Update(Product obj)
         {
             _db.Update(obj);
         }

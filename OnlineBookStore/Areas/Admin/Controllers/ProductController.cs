@@ -4,27 +4,28 @@ using BookStore.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace OnlineBookStore.Controllers
+namespace OnlineBookStore.Areas.Admin.Controllers.Controllers
 {
-    public class CategoryController : Controller
+    [Area("Admin")]
+    public class ProductController : Controller
     {
-        private readonly ICategory _category;
-        public CategoryController(ICategory category)
+        private readonly IUnitOfWork _unitOfWork;
+        public ProductController(IUnitOfWork unitOfWork)
         {
-            _category = category;
+            _unitOfWork = unitOfWork;
         }
         public IActionResult Index()
         {
-            List<Category> categories = _category.GetAll().ToList();
-            //IQueryable<Category> categories = _db.Categories.AsQueryable();
-            return View(categories);
+            List<Product> products = _unitOfWork.Product.GetAll().ToList();
+            //IQueryable<Product> categories = _db.Categories.AsQueryable();
+            return View(products);
         }
         public IActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Category obj)
+        public IActionResult Create(Product obj)
         {
             //if (obj.Name == obj.DisplayOrder.ToString())
             //{
@@ -32,9 +33,9 @@ namespace OnlineBookStore.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _category.Add(obj);
-                _category.Save();
-                TempData["success"] = "Category created successfully";
+                _unitOfWork.Product.Add(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Product created successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -45,11 +46,11 @@ namespace OnlineBookStore.Controllers
             {
                 return NotFound();
             }
-            Category category = _category.Get(u => u.CategoryId == id);
-            return View(category);
+            Product Product = _unitOfWork.Product.Get(u => u.ProductId == id);
+            return View(Product);
         }
         [HttpPost]
-        public IActionResult Edit(Category obj)
+        public IActionResult Edit(Product obj)
         {
             //if (obj.Name == obj.DisplayOrder.ToString())
             //{
@@ -57,9 +58,9 @@ namespace OnlineBookStore.Controllers
             //}
             if (ModelState.IsValid)
             {
-                _category.Update(obj);
-                _category.Save();
-                TempData["success"] = "Category updated successfully";
+                _unitOfWork.Product.Update(obj);
+                _unitOfWork.Save();
+                TempData["success"] = "Product updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -67,14 +68,14 @@ namespace OnlineBookStore.Controllers
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            Category? obj = _category.Get(u => u.CategoryId == id);
+            Product? obj = _unitOfWork.Product.Get(u => u.ProductId == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _category.Remove(obj);
-            _category.Save();
-            TempData["success"] = "Category deleted successfully";
+            _unitOfWork.Product.Remove(obj);
+            _unitOfWork.Save();
+            TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index");
         }
     }

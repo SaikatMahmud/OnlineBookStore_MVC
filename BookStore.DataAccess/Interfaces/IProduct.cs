@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.DataAccess.Interfaces
 {
-    public interface ICategory : IRepo<Category>
+    public interface IProduct: IRepo<Product>
     {
-        void Update(Category category);
+        void Update(Product product);
     }
 }
