@@ -48,7 +48,7 @@ namespace BookStore.DataAccess.Data
                 },
                 new Product
                 {
-                    ProductId =2,
+                    ProductId = 2,
                     Title = "Dark Skies",
                     Author = "Nancy Hoover",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
