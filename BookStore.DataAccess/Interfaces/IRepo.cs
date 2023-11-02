@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,6 +12,7 @@ namespace BookStore.DataAccess.Interfaces
     {
         IEnumerable<T> GetAll();
         T Get(Expression<Func<T, bool>> filter);
+        IEnumerable<T> IncludeProp<TProperty>(Expression<Func<T, TProperty>> filter);
         void Add(T entity);
         //void Update(T obj);
         void Remove(T entity);

@@ -37,6 +37,12 @@ namespace BookStore.DataAccess.Repos
             return query.ToList();  
         }
 
+        public IEnumerable<T> IncludeProp<TProperty>(Expression<Func<T, TProperty>> filter)
+        {
+            IQueryable<T> query = dbSet.Include(filter);
+            return query.ToList();
+        }
+
         public void Remove(T entity)
         {
            dbSet.Remove(entity);

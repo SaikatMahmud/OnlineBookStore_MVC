@@ -11,5 +11,7 @@ namespace BookStore.Models
         public string Name { get; set; }
         [Range(1, 100, ErrorMessage = "Display Order for category must be between 1 and 100")]
         public int DisplayOrder { get; set; }
+        public virtual ICollection<Product> Products { get; set; }
+
     }
 }

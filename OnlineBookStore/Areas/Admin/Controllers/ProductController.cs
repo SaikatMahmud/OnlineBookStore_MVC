@@ -20,6 +20,7 @@ namespace OnlineBookStore.Areas.Admin.Controllers.Controllers
         public IActionResult Index()
         {
             List<Product> products = _unitOfWork.Product.GetAll().ToList();
+            products = _unitOfWork.Product.IncludeProp(u=> u.Category).ToList();
             //IQueryable<Product> categories = _db.Categories.AsQueryable();
             return View(products);
         }
@@ -174,7 +175,7 @@ namespace OnlineBookStore.Areas.Admin.Controllers.Controllers
         //    }
         //    return View();
         //}
-        [HttpPost]
+       // [HttpPost]
         public IActionResult Delete(int id)
         {
             Product? obj = _unitOfWork.Product.Get(u => u.ProductId == id);
