@@ -17,6 +17,7 @@ namespace OnlineBookStore.Areas.Admin.Controllers.Controllers
         public IActionResult Index()
         {
             List<Category> categories = _unitOfWork.Category.GetAll().ToList();
+            //categories = _unitOfWork.Category.IncludeProp(u=> u.Products).ToList();
             //IQueryable<Category> categories = _db.Categories.AsQueryable();
             return View(categories);
         }

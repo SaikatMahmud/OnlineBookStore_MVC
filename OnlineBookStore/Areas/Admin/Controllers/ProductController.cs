@@ -4,6 +4,9 @@ using BookStore.Models;
 using BookStore.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+//using Newtonsoft.Json;
 
 namespace OnlineBookStore.Areas.Admin.Controllers.Controllers
 {
@@ -188,5 +191,41 @@ namespace OnlineBookStore.Areas.Admin.Controllers.Controllers
             TempData["success"] = "Product deleted successfully";
             return RedirectToAction("Index");
         }
+
+        #region API
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll().ToList();
+           // products = _unitOfWork.Product.IncludeProp(u => u.Category).ToList();
+            //string j = JsonConvert.SerializeObject(products);
+           // string j = JsonSerializer.Serialize(products);
+            return Json(new {data = products});
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+
+            Product productToDelete = _unitOfWork.Product.Get(u=>u.ProductId == id);
+            if(productToDelete == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            string oldImgPath = (string.IsNullOrEmpty(productToDelete.ImageUrl.ToString())) ? "" : Path.Combine(_webHostEnvironment.WebRootPath, productToDelete.ImageUrl.TrimStart('\\'));
+            if (System.IO.File.Exists(oldImgPath))
+            {
+                System.IO.File.Delete(oldImgPath);
+            }
+            _unitOfWork.Product.Remove(productToDelete);
+            _unitOfWork.Save();
+            // products = _unitOfWork.Product.IncludeProp(u => u.Category).ToList();
+            //string j = JsonConvert.SerializeObject(products);
+            // string j = JsonSerializer.Serialize(products);
+            return Json(new { success = true, message = "Delete successfull" });
+        }
+
+        #endregion
     }
 }

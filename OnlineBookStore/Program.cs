@@ -2,11 +2,33 @@ using Microsoft.EntityFrameworkCore;
 using BookStore.DataAccess.Data;
 using BookStore.DataAccess.Interfaces;
 using BookStore.DataAccess.Repos;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//builder.Services.AddControllers()
+//        .AddJsonOptions(opt =>
+//        {
+//            opt.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+//        });
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    options.SerializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
+});
+//builder.Services.AddControllers()
+//        .AddNewtonsoftJson(options =>
+//        {
+//            options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+//        });
+
+//builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(options => options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+//builder.Services.AddControllers().AddJsonOptions(x =>
+//x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+
+
+
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
