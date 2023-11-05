@@ -44,9 +44,9 @@ function Delete(url) {
                 url: url,
                 type: 'DELETE',
                 success: function (data) {
+                    toastr.success(data.message);
                     dataTable.ajax.reload();
-                toastr.success(data.message);
-            }
+                }
             })
         }
     })

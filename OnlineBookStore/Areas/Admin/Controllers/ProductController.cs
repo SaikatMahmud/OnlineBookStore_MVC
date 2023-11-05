@@ -213,7 +213,11 @@ namespace OnlineBookStore.Areas.Admin.Controllers.Controllers
             {
                 return Json(new { success = false, message = "Error while deleting" });
             }
-            string oldImgPath = (string.IsNullOrEmpty(productToDelete.ImageUrl.ToString())) ? "" : Path.Combine(_webHostEnvironment.WebRootPath, productToDelete.ImageUrl.TrimStart('\\'));
+            string oldImgPath = string.Empty;
+            if (!string.IsNullOrEmpty(productToDelete.ImageUrl))
+            {
+              oldImgPath = Path.Combine(_webHostEnvironment.WebRootPath, productToDelete.ImageUrl.TrimStart('\\'));
+            }
             if (System.IO.File.Exists(oldImgPath))
             {
                 System.IO.File.Delete(oldImgPath);
