@@ -4,6 +4,7 @@ using BookStore.DataAccess.Interfaces;
 using BookStore.DataAccess.Repos;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 //builder.Services.AddControllers()
@@ -33,7 +34,9 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
 
 var app = builder.Build();
@@ -61,6 +64,8 @@ app.UseStaticFiles(new StaticFileOptions()
 });
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
